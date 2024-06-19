@@ -18,12 +18,14 @@ export const fetchAccessToken = async () => {
     return responce.data;
 }
 
-export const getRecommandation = async(accessToken, moodParams) => {
-    const responce = await axios.post(`${API_URL}/recommendations`, { accessToken, moodParams })
+export const getRecommandation = async (accessToken, moodParams) => {
+    accessToken = await accessToken;
+    let responce = await axios.post(`${API_URL}/recommendations`, { accessToken, moodParams })
     return responce.data;
+    
 }
 
 export const getFreeTracks = async () => {
     const responce = await axios.get(`${API_URL}/free-tracks`);
-    return responce.data;
+    console.log(responce.data);
 }

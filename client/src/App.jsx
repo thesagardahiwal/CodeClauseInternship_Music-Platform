@@ -8,21 +8,24 @@ import Explore from './pages/Explore';
 import PlaylistDetail from './pages/PlaylistDetail';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
+import AudioPlayerProvider from './hooks/AudioPlayerProvider.jsx';
 
 const App = () => {
     return (
         <Router>
             <Header />
-            <main className='h-[100vh] overflow-scroll'>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/explore" element={<Explore />} />
-                    <Route path="/playlists/:id" element={<PlaylistDetail />} />
-                    <Route path="/signin" element={<SignIn />} />
-                    <Route path="/signup" element={<SignUp />} />
-                </Routes>
-            </main>
-            <Footer />
+            <AudioPlayerProvider>
+                <main className='h-[100vh]'>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/explore" element={<Explore />} />
+                        <Route path="/playlists/:id" element={<PlaylistDetail />} />
+                        <Route path="/signin" element={<SignIn />} />
+                        <Route path="/signup" element={<SignUp />} />
+                    </Routes>
+                </main>
+                <Footer />
+            </AudioPlayerProvider>
         </Router>
     );
 };

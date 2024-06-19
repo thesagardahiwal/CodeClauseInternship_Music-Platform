@@ -1,3 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 200px; /* Adjust the width as needed */
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.ellipsissm {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100px; /* Adjust the width as needed */
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.list {
+    padding: 20px;
+    margin: 10px;
+    border-radius: 5px;
+    background-color: gray;
+    font-family: Arial, sans-serif;
+    justify-items: center;
+    display: flex;
+    color: white;
+}

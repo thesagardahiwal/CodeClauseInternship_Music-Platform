@@ -1,40 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { getFreeTracks, getRecommandation, fetchAccessToken } from "../services/api.js"
 import MusicPlayer from './MusicPlayer.jsx';
+import { useAudioPlayer } from '../hooks/AudioPlayerProvider.jsx';
+import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 function Playlist() {
-    const [playList, setPlayList] = useState(null);
-    const [accessToken, setAccessToken] = useState(null);
     
-    useEffect(() => {
-        
-        accessToken ?? fetchAccessToken().then((data) => {
-            setAccessToken(() => data);
-        })
-        playList ?? getRecommandation(accessToken, moodParams).then((data) => {
-            setPlayList(() => data)
-        })
-    }, [accessToken, playList]);
-
-    
-    
-    // Example mood parameters
-    const moodParams = {
-        genres: ['happy', 'chill'], // You can find the list of available genre seeds in Spotify's documentation
-        danceability: 0.8,
-        energy: 0.7,
-        valence: 0.9 // High valence for positive mood
-    };
-
-    
-  return (
-    <div className='grid p-2 gap-2 h-full'>
-        {playList?.map((track, index) => (
-            <div key={index}>
-                <MusicPlayer track={track}/>
-            </div>
-        ))}
-    </div>
-  )
+    return (
+        <div className='p-2'>
+            <h1 className='text-lg font-bold'>Your Library</h1>
+            <ul>
+                <li className='list'>Liked Music</li>
+                <li className='list'>Old Music</li>
+                <li className='list'>Romantic Music</li>
+                <li className='list'>HipHop Music</li>
+            </ul>
+        </div>
+    )
 }
 
 export default Playlist

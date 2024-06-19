@@ -1,45 +1,21 @@
 // src/components/MusicPlayer.jsx
-import React, { useState } from 'react';
+import React from 'react';
+import {useAudioPlayer} from '../hooks/AudioPlayerProvider.jsx';
+import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 
 const MusicPlayer = ({ track }) => {
-
-    const [audio, setAudio] = useState(null);
-    const [error, setError] = useState('');
-    console.log(track.album.images[0])
-    const playTrack = () => {
-        if (track && track.preview_url) {
-            if (audio) {
-                audio.pause();
-                setAudio(null);
-            }
-            const newAudio = new Audio(track.preview_url);
-            newAudio.onerror = () => {
-                console.error('Failed to play the audio');
-                setError('Failed to play the audio. The format might not be supported.');
-            };
-            newAudio.play().catch(err => {
-                console.error('Error playing audio:', err);
-                setError('Error playing audio: ' + err.message);
-            });
-            setAudio(newAudio);
-        } else {
-            setError('No preview URL available for this track');
-        }
-    };
-
+    const {setNewTrack} = useAudioPlayer();
+    
     return (
-        <div>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            {track ? (
-                <div className='bg-slate-300 rounded-md p-2'>
-                    <img src={track.album.images[0].url} alt="mp3" style={{height: 230, width: "auto"}} />
-                    <h2>{track.name}</h2>
-                    <p>{track.artists.map(artist => artist.name).join(', ')}</p>
-                    <button className='bg-blue-400 rounded-md p-1' onClick={playTrack}>Play Preview</button>
-                </div>
-            ) : (
-                <p>Loading track info...</p>
-            )}
+        <div className='flex m-2 bg-slate-300 items-center justify-center rounded-md p-5'>
+            <div className='h-[100px] flex flex-col justify-end items-center w-[100px] '>
+                <img src={track?.album?.images[0]?.url} alt="mp3" style={{height: 50, width: "auto"}} />
+                <h2 className='text-[10px] ellipsissm'>{track.name}</h2>
+                <p className='ellipsissm text-[7px]'>{track?.artists?.map(artist => artist.name).join(', ')}</p>
+                <button onClick={() => setNewTrack(() => track)}>
+                    <PlayCircleIcon />
+                </button>
+            </div>
         </div>
     );
 };

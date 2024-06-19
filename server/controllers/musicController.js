@@ -40,14 +40,14 @@ const fetchRecommendations = async (req, res) => {
                 'Authorization': `Bearer ${accessToken}`
             },
             params: {
-                limit: 20,
+                limit: 10,
                 seed_genres: moodParams.genres.join(','),  // Example: ['happy', 'chill']
                 target_danceability: moodParams.danceability,
                 target_energy: moodParams.energy,
                 target_valence: moodParams.valence
             }
         });
-        res.json(response.data.tracks);
+        res.status(200).json(response.data.tracks);
     } catch (error) {
         console.error('Error fetching recommendations:', error);
     }
