@@ -1,3 +1,4 @@
-import album from "./default.png"
 
-export { album };
+import logo from "./tunely.png"
+
+export { logo };

@@ -20,13 +20,3 @@
     vertical-align: middle;
 }
 
-.list {
-    padding: 20px;
-    margin: 10px;
-    border-radius: 5px;
-    background-color: gray;
-    font-family: Arial, sans-serif;
-    justify-items: center;
-    display: flex;
-    color: white;
-}

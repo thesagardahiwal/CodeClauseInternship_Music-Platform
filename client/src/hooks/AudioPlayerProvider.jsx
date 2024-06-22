@@ -82,7 +82,7 @@ const AudioPlayerProvider = ({ children }) => {
 
     useEffect(() => {
         if (track && track.preview_url) {
-            // play();
+            play();
         }
     }, [setNewTrack])
 

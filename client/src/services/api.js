@@ -29,3 +29,27 @@ export const getFreeTracks = async () => {
     const responce = await axios.get(`${API_URL}/free-tracks`);
     console.log(responce.data);
 }
+
+export const searchTracks = async (query) => {
+    let accessToken = localStorage.getItem("access-token");
+    let responce = await axios.post(`${API_URL}/search`, { query, accessToken });
+    return responce.data;
+}
+
+export const getPlaylist = async () => {
+    let token = localStorage.getItem("user");
+    let responce = await axios.get(`${API_URL}/playlist`);
+    return responce.data;
+}
+
+export const createPlaylist = async (name) => {
+    let token = localStorage.getItem("user");
+    let responce = await axios.post(`${API_URL}/playlist`, {
+        name
+    }, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+    return responce.data;
+}

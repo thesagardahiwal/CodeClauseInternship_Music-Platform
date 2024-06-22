@@ -53,5 +53,22 @@ const fetchRecommendations = async (req, res) => {
     }
 };
 
+const searchTracks = async (req, res) => {
+    try {
+        const {query, accessToken} = req.body;
+        const response = await axios.get('https://api.spotify.com/v1/search', {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            },
+            params: {
+                q: query,
+                type: 'track'
+            }
+        });
+        res.status(200).json(response.data.tracks.items);
+    } catch (error) {
+        console.error('Error searching tracks:', error);
+    }
+};
 
-module.exports = { getTracks, fetchAccessToken, fetchRecommendations };
+module.exports = { getTracks, fetchAccessToken, fetchRecommendations, searchTracks };

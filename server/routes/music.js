@@ -1,14 +1,15 @@
 // routes/music.js
 const express = require('express');
-const { getTracks, fetchAccessToken, fetchRecommendations } = require('../controllers/musicController.js');
+const { getTracks, fetchAccessToken, fetchRecommendations, searchTracks } = require('../controllers/musicController.js');
 const { protect } = require('../middlewares/authMiddleware.js');
-const { checkToken } = require('../middlewares/musicMiddleware.js');
+const { checkToken, searchToken } = require('../middlewares/musicMiddleware.js');
 const router = express.Router();
 
 router
     .get('/tracks', protect, getTracks)
     .get('/free-tracks', getTracks)
-    .get('/token', fetchAccessToken)
-    .post('/recommendations',checkToken, fetchRecommendations)
+    .get('/token', protect, fetchAccessToken)
+    .post('/recommendations', protect, checkToken, fetchRecommendations)
+    .post('/search', protect, searchToken, searchTracks);
 
 module.exports = router;

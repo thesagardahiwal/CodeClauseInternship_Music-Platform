@@ -13,4 +13,9 @@ const checkToken = (req, res, next) => {
     }
 }
 
-module.exports = { checkToken }
+const searchToken = (req, res, next) => {
+    console.log("Fired Middleware!")
+    next();
+}
+
+module.exports = { checkToken, searchToken }
