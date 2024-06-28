@@ -14,7 +14,6 @@ const checkToken = (req, res, next) => {
 }
 
 const searchToken = (req, res, next) => {
-    console.log("Fired Middleware!")
     next();
 }
 

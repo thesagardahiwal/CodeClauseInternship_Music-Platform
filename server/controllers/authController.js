@@ -1,4 +1,5 @@
 // controllers/authController.js
+const { response } = require('express');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 
@@ -21,7 +22,7 @@ const login = async (req, res) => {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-            expiresIn: '1h'
+            expiresIn: '12h'
         });
         res.json({ token });
     } catch (error) {
@@ -29,4 +30,9 @@ const login = async (req, res) => {
     }
 };
 
-module.exports = { register, login };
+const getCurrentUser = async (req, res) => {
+    const user = await User.findById(req.user.id);
+    res.json({username: user.username, playlist: user.playlist});
+}
+
+module.exports = { register, login, getCurrentUser };
