@@ -23,6 +23,7 @@ Welcome to the Music Platform Project! This project aims to create a comprehensi
 - Playlists Creation and Management
 - Music Streaming
 - Music Recommendations
+- Social Features (share playlists with friends)
 - Search Functionality
 - Responsive Design
 
