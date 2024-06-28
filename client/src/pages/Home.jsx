@@ -8,8 +8,10 @@ import MusicDetails from '../components/MusicDetails';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import Header from '../components/Header';
+import { useTheme } from '../hooks/ThemeToggler';
 
 const Home = () => {
+    const { setTheme, currentTheme } = useTheme();
     const { setPlayList, playList, track } = useAudioPlayer();
     const accessToken = useMemo(() => fetchAccessToken().then((data) => {
         return data;

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useRef, useEffect } from 'react';
+import { getPlaylist } from '../services/api';
 
 const AudioPlayerContext = createContext();
 
@@ -15,21 +16,26 @@ const AudioPlayerProvider = ({ children }) => {
     const [duration, setDuration] = useState(0);
     const [volume, setVolume] = useState(1);
     const [previousTracks, setPreviousTracks] = useState([]);
+    const [load, setLoad] = useState(false);
 
     const play = () => {
-        if (audioRef.current.src) {
-            audioRef.current.play().catch(error => console.error('Error playing audio:', error));
+        const audio = audioRef.current;
+        audio.play().then(() => {
             setIsPlaying(true);
-        }
+        }).catch(error => {
+            console.error('Error playing audio:', error);
+        });
     };
+
     const pause = () => {
-        audioRef.current.pause();
+        const audio = audioRef.current;
+        audio.pause();
         setIsPlaying(false);
     };
     const stop = () => {
         audioRef.current.pause();
         audioRef.current.currentTime = 0;
-        setIsPlaying(false);
+        setIsPlaying(() => false);
     };
     const changeVolume = (newVolume) => {
         audioRef.current.volume = newVolume;
@@ -80,16 +86,15 @@ const AudioPlayerProvider = ({ children }) => {
         }
     }, [currentTime]);
 
+
     useEffect(() => {
-        if (track && track.preview_url) {
-            play();
-        }
-    }, [setNewTrack])
+
+    }, [load]);
 
 
 
     return (
-        <AudioPlayerContext.Provider value={{ track, isPlaying, play, pause,setPlayList, playList, stop, setNewTrack, volume, audioRef, currentTime, duration, changeVolume, prevSong, nextSong }}>
+        <AudioPlayerContext.Provider value={{ setLoad, load, setIsPlaying, track, isPlaying, play, pause,setPlayList, playList, stop, setNewTrack, volume, audioRef, currentTime, duration, changeVolume, prevSong, nextSong }}>
             {children}
         </AudioPlayerContext.Provider>
     );

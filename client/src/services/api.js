@@ -1,7 +1,7 @@
-// src/services/api.js
+import { getCurrentUser } from './auth';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/api/music';
+const API_URL = 'http://localhost:8001/api/music';
 
 export const getTracks = async (token) => {
     const response = await axios.get(`${API_URL}/tracks`, {
@@ -36,19 +36,53 @@ export const searchTracks = async (query) => {
     return responce.data;
 }
 
-export const getPlaylist = async () => {
-    let token = localStorage.getItem("user");
-    let responce = await axios.get(`${API_URL}/playlist`);
-    return responce.data;
+export const getPlaylist = async (id) => {
+    let data = JSON.parse(localStorage.getItem("user"));
+    if (!id) {
+        let responce = await axios.get(`${API_URL}/playlist`, { headers: {
+            Authorization: `Bearer ${data.token}`
+        }});
+        return responce.data;
+    } else {
+        let responce = await axios.get(`${API_URL}/playlist/${id}`, { headers: {
+            Authorization: `Bearer ${data.token}`
+        }});
+        return responce.data;
+    }
+
 }
 
 export const createPlaylist = async (name) => {
-    let token = localStorage.getItem("user");
+    let data = JSON.parse(localStorage.getItem("user"))
     let responce = await axios.post(`${API_URL}/playlist`, {
         name
     }, {
         headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${data.token}`
+        }
+    });
+    return responce.data;
+}
+
+export const deletePlaylist = async (id) => {
+    let data = JSON.parse(localStorage.getItem("user"))
+    let responce = await axios.post(`${API_URL}/playlist/del`, {
+        playlistId: id
+    }, {
+        headers: {
+            Authorization: `Bearer ${data.token}`
+        }
+    });
+    return responce.data;
+}
+
+export const addTrackToPlaylist = async (track, playlistId) => {
+    let data = JSON.parse(localStorage.getItem("user"))
+    let responce = await axios.post(`${API_URL}/playlist/${playlistId}/track`, {
+        track
+    }, {
+        headers: {
+            Authorization: `Bearer ${data.token}`
         }
     });
     return responce.data;

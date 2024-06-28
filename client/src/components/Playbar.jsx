@@ -6,15 +6,17 @@ import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import RepeatIcon from '@mui/icons-material/Repeat';
 import ShuffleIcon from '@mui/icons-material/Shuffle';
 import { useAudioPlayer } from '../hooks/AudioPlayerProvider';
+import { useTheme } from '../hooks/ThemeToggler';
 
 
 function Playbar() {
-    const {track, isPlaying, play, pause, stop, prevSong, nextSong, currentTime, duration, audioRef} = useAudioPlayer();
+    const { setTheme, currentTheme } = useTheme();
+    const {track, isPlaying, setIsPlaying, play, pause, stop, prevSong, nextSong, currentTime, duration, audioRef} = useAudioPlayer();
     const handlePlayButton = () => {
         if (currentTime == duration) {
             stop();
         }
-        isPlaying ? pause() : play();
+        isPlaying ? pause() : play()
     }
 
     document.onkeydown = (e) => {
@@ -24,7 +26,7 @@ function Playbar() {
     }
 
   return (
-    <div className='flex justify-center items-center gap-2'>
+    <div className='flex justify-center text-md cursor-pointer items-center gap-2'>
         <span><ShuffleIcon /></span>
         <span onClick={prevSong}><SkipPreviousIcon /></span>
         <span onClick={handlePlayButton}>{isPlaying ? <PauseCircleIcon /> : <PlayCircleIcon />}</span>

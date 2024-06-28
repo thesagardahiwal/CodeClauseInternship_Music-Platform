@@ -2,25 +2,18 @@
 import React, { useEffect, useState } from 'react';
 import { getTracks } from '../services/api';
 import MusicPlayer from '../components/MusicPlayer';
-import { getCurrentUser } from '../services/auth';
+import { useTheme } from '../hooks/ThemeToggler';
+// import { getCurrentUser } from '../services/auth';
 
 const Explore = () => {
     const [tracks, setTracks] = useState([]);
-    const user = getCurrentUser();
-
+    const { setTheme, currentTheme } = useTheme();
     useEffect(() => {
-        const fetchTracks = async () => {
-            if (user) {
-                const data = await getTracks(user.token);
-                setTracks(data);
-            }
-        };
 
-        fetchTracks();
-    }, [user]);
+    }, []);
 
     return (
-        <div>
+        <div className={`${currentTheme.explore} h-[100vh]`}>
             <h1>Explore Music</h1>
             {/* {tracks.map(track => (
                 <MusicPlayer key={track.id} track={track} />
